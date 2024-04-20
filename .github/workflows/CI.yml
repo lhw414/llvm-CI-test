@@ -1,121 +1,56 @@
-# name: CI
+name: CI
 
-# on: [push, pull_request]
-
-# jobs:
-#   build-and-test:
-#     runs-on: ubuntu-latest
-#     container:
-#       image: strikef/swpp202401-ci:v240419
-
-#     steps:
-#       - uses: actions/checkout@v3
-#         with:
-#           path: "compiler"
-
-#       - uses: actions/checkout@v3
-#         with:
-#           repository: "snu-sf-class/swpp202401-benchmarks"
-#           path: "benchmarks"
-
-#       - uses: actions/checkout@v3
-#         with:
-#           repository: "snu-sf-class/swpp202401-interpreter"
-#           path: "interpreter"
-
-#       - name: Cache Alive2 build
-#         id: cache-alive2
-#         uses: actions/cache@v3
-#         with:
-#           path: ./alive2/build
-#           key: ${{ runner.os }}-alive2-${{ hashFiles('.github/scripts/build_alive2.sh') }}
-
-#       - if: ${{ steps.cache-alive2.outputs.cache-hit != 'true' }}
-#         name: Build Alive2
-#         run: |
-#           chmod +x compiler/.github/scripts/build_alive2.sh
-#           compiler/.github/scripts/build_alive2.sh
-
-#       - name: Configure CMake
-#         run: cmake -GNinja -Bbuild -DALIVE2_BINARY_DIR=~./alive2/build/
-
-#       - name: Build
-#         run: cmake --build build --target docs
-
-#       - name: Run unit tests
-#         run: ctest --test-dir build
-
-#       - name: Test Benchmark
-#         run: |
-#           chmod +x compiler/.github/scripts/test_benchmark.sh
-#           compiler/.github/scripts/test_benchmark.sh
-
-name: Pass Test
-on:
-  pull_request:
-    branches: ["main"]
-  push:
-    branches: ["main"]
+on: [push, pull_request]
 
 jobs:
-  build:
+  build-and-test:
     runs-on: ubuntu-latest
-    container: strikef/swpp202401-ci:v240419
+    container:
+      image: strikef/swpp202401-ci:v240419
 
     steps:
-      - name: alive2 clone
-        run: |
-          ln -s /opt/llvm-18.1.0 ~/llvm-swpp
-
-      - uses: actions/cache@v3
-        id: alive_cache
-        name: check cache alive2
-        with:
-          path: ${{ github.workspace }}/alive2
-          key: ${{ runner.os }}-alive
-
-      # need build
-      - if: steps.alive_cache.outputs.cache-hit != 'true'
-        name: build alive2
-        run: |
-          git clone https://github.com/AliveToolkit/alive2.git
-          cd $GITHUB_WORKSPACE/alive2
-          git checkout 9ca7092c21e69b4e71c91b9280cff920234410dc
-          cmake -GNinja -Bbuild -DBUILD_TV=ON -DCMAKE_PREFIX_PATH="~/llvm-swpp;/opt/z3-4.13.0" -DCMAKE_BUILD_TYPE=Release -DZ3_INCLUDE_DIR=/opt/z3-4.13.0/include -DZ3_LIBRARIES=/opt/z3-4.13.0/lib64/libz3.so
-          cmake --build build
       - uses: actions/checkout@v3
-        name: get compiler repo
         with:
-          path: ${{ github.workspace }}/compiler
-      # need build
-      - name: build compiler
-        run: |
-          cd $GITHUB_WORKSPACE/compiler
-          cmake -GNinja -Bbuild
-          cmake --build build --target swpp-compiler
-      - uses: actions/cache@v3
-        name: check cache interpreter
-        id: interpreter_cache
-        with:
-          path: ${{ github.workspace }}/interpreter-swpp
-          key: ${{ runner.os }}-interpreter
-      # need build
-      - if: steps.interpreter_cache.outputs.cache-hit != 'true'
-        uses: actions/checkout@v3
-        name: get interpreter repo
-        with:
-          repository: snu-sf-class/swpp202401-interpreter
-          path: ${{ github.workspace }}/interpreter-swpp
-          ref: main
-      - if: steps.interpreter_cache.outputs.cache-hit != 'true'
-        name: build interpreter
-        run: |
-          cd $GITHUB_WORKSPACE/interpreter-swpp
-          ./build.sh
+          path: "compiler"
 
-      - name: test
+      - uses: actions/checkout@v3
+        with:
+          repository: "snu-sf-class/swpp202401-benchmarks"
+          path: "benchmarks"
+
+      - uses: actions/checkout@v3
+        with:
+          repository: "snu-sf-class/swpp202401-interpreter"
+          path: "interpreter"
+
+      - name: Install Ninja
         run: |
-          cp -r $GITHUB_WORKSPACE/interpreter-swpp ~/
-          cp -r $GITHUB_WORKSPACE/alive2 ~/
-          cd $GITHUB_WORKSPACE/compiler/build
-          ctest --output-on-failure
+          chmod +x compiler/.github/scripts/install-ninja.sh
+          compiler/.github/scripts/install-ninja.sh
+
+      - name: Cache Alive2 build
+        id: cache-alive2
+        uses: actions/cache@v3
+        with:
+          path: ./alive2/build
+          key: ${{ runner.os }}-alive2-${{ hashFiles('.github/scripts/build_alive2.sh') }}
+
+      - if: ${{ steps.cache-alive2.outputs.cache-hit != 'true' }}
+        name: Build Alive2
+        run: |
+          chmod +x compiler/.github/scripts/build_alive2.sh
+          compiler/.github/scripts/build_alive2.sh
+
+      - name: Configure CMake
+        run: cmake -GNinja -Bbuild -DALIVE2_BINARY_DIR=~./alive2/build/
+
+      - name: Build
+        run: cmake --build build --target docs
+
+      - name: Run unit tests
+        run: ctest --test-dir build
+
+      - name: Test Benchmark
+        run: |
+          chmod +x compiler/.github/scripts/test_benchmark.sh
+          compiler/.github/scripts/test_benchmark.sh
