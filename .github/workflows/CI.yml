@@ -1,27 +1,18 @@
-name: CI
+name: CI Test
 
-on: [push, pull_request]
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
 
 jobs:
-  build-and-test:
+  build:
     runs-on: ubuntu-latest
-    container:
-      image: strikef/swpp202401-ci:v240419
+    container: strikef/swpp-ci
 
     steps:
       - uses: actions/checkout@v3
-        with:
-          path: "compiler"
-
-      - uses: actions/checkout@v3
-        with:
-          repository: "snu-sf-class/swpp202401-benchmarks"
-          path: "benchmarks"
-
-      - uses: actions/checkout@v3
-        with:
-          repository: "snu-sf-class/swpp202401-interpreter"
-          path: "interpreter"
 
       - name: Cache Alive2 build
         id: cache-alive2
@@ -32,20 +23,19 @@ jobs:
 
       - if: ${{ steps.cache-alive2.outputs.cache-hit != 'true' }}
         name: Build Alive2
-        run: |
-          chmod +x compiler/.github/scripts/build_alive2.sh
-          compiler/.github/scripts/build_alive2.sh
+        run: ./.github/scripts/build_alive2.sh
 
       - name: Configure CMake
         run: cmake -GNinja -Bbuild -DALIVE2_BINARY_DIR=~./alive2/build/
 
       - name: Build
-        run: cmake --build build --target compiler
+        run: cmake --build build --target swpp-compiler
 
-      - name: Run unit tests
+      - name: Unit Tests
         run: ctest --test-dir build
 
-      - name: Test Benchmark
-        run: |
-          chmod +x compiler/.github/scripts/test_benchmark.sh
-          compiler/.github/scripts/test_benchmark.sh
+      - name: Clone benchmark repository
+        run: git clone https://github.com/snu-sf-class/swpp202301-benchmarks
+
+      - name: Test Benchmark Compilation
+        run: ./.github/scripts/test_benchmark_compilation.sh
