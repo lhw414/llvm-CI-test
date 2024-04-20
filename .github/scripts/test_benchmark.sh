@@ -3,7 +3,7 @@
 LLVM_DIR=/opt/llvm-18.1.0/bin/
 ALIVE_TV_BINARY=$(realpath "$1"/alive-tv)
 
-cd swpp202301-benchmarks/
+cd benchmarks/
 
 # Build lls
 python3 build-lls.py "${LLVM_DIR}"
