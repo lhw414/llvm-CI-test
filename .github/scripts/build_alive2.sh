@@ -1,5 +1,8 @@
 #!/bin/bash
 
+sudo apt-get update
+sudo apt-get install -y re2c libhiredis-dev ninja-build
+
 git clone https://github.com/AliveToolkit/alive2.git
 cd alive2
 
