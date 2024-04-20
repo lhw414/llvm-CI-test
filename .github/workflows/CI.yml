@@ -35,7 +35,7 @@ jobs:
 
       - if: ${{ steps.cache-alive2.outputs.cache-hit != 'true' }}
         name: Build Alive2
-        run: ./.github/scripts/build_alive2.sh
+        run: compiler/.github/scripts/build_alive2.sh
 
       - name: Configure CMake
         run: cmake -GNinja -Bbuild -DALIVE2_BINARY_DIR=~./alive2/build/
