@@ -1,0 +1,40 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    container:
+      image: strikef/swpp202401-ci:latest
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          path: "compiler"
+      - uses: actions/checkout@v3
+        with:
+          repository: "snu-sf-class/swpp202401-benchmarks"
+          path: "benchmarks"
+      - uses: actions/checkout@v3
+        with:
+          repository: "snu-sf-class/swpp202401-interpreter"
+          path: "interpreter"
+
+      - name: Setup environment
+        run: |
+          echo "Setup 초기 환경 설정"
+      - name: Check LLVM configuration
+        run: |
+          echo "/opt/llvm-18.1.0/bin/clang --version"
+          /opt/llvm-18.1.0/bin/clang --version
+      - name: Run unit tests
+        run: |
+          cd compiler/src
+          make test  # 가정: 테스트를 실행하는 메이크 파일이 존재합니다.
+      - name: Test compiler and interpreter
+        run: |
+          cd compiler
+          ./compile.sh  # 이 스크립트는 컴파일러를 사용하여 벤치마크 코드를 컴파일해야 합니다.
+          cd ../interpreter
+          python3 run_interpreter.py ../benchmarks/example1.ir  # 예제 파일 경로 수정 필요
