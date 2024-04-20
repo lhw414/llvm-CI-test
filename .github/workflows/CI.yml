@@ -25,8 +25,8 @@ jobs:
 
       - name: Install dependencies
         run: |
-          sudo apt-get update
-          sudo apt-get install -y git g++ cmake ninja-build re2c libhiredis-dev
+          apt-get update
+          apt-get install -y git g++ cmake ninja-build re2c libhiredis-dev
 
       - name: Cache Alive2 build
         id: cache-alive2
