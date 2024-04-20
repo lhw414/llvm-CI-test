@@ -23,6 +23,11 @@ jobs:
           repository: "snu-sf-class/swpp202401-interpreter"
           path: "interpreter"
 
+      - name: List Z3 directory structure
+        run: |
+          echo "Listing the contents of /opt/z3-4.13.0/"
+          ls -lahR /opt/z3-4.13.0/
+
       - name: Install dependencies
         run: |
           apt-get update
