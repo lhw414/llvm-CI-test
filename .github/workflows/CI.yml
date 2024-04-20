@@ -25,8 +25,8 @@ jobs:
 
       - name: Install Ninja
         run: |
-          chmod +x compiler/.github/scripts/install-ninja.sh
-          compiler/.github/scripts/install-ninja.sh
+          chmod +x compiler/.github/scripts/install_ninja.sh
+          compiler/.github/scripts/install_ninja.sh
 
       - name: Cache Alive2 build
         id: cache-alive2
