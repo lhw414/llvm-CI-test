@@ -23,10 +23,10 @@ jobs:
           repository: "snu-sf-class/swpp202401-interpreter"
           path: "interpreter"
 
-      - name: Install Ninja
+      - name: Install dependencies
         run: |
-          chmod +x compiler/.github/scripts/install_ninja.sh
-          compiler/.github/scripts/install_ninja.sh
+          sudo apt-get update
+          sudo apt-get install -y git g++ cmake ninja-build re2c libhiredis-dev
 
       - name: Cache Alive2 build
         id: cache-alive2
@@ -45,7 +45,7 @@ jobs:
         run: cmake -GNinja -Bbuild -DALIVE2_BINARY_DIR=~./alive2/build/
 
       - name: Build
-        run: cmake --build build --target docs
+        run: cmake --build build --target compiler
 
       - name: Run unit tests
         run: ctest --test-dir build
