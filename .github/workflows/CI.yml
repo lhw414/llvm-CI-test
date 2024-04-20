@@ -9,7 +9,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: strikef/swpp-ci
+    container: strikef/swpp202401-ci:v240419
 
     steps:
       - uses: actions/checkout@v3
@@ -35,7 +35,7 @@ jobs:
         run: ctest --test-dir build
 
       - name: Clone benchmark repository
-        run: git clone https://github.com/snu-sf-class/swpp202301-benchmarks
+        run: git clone https://github.com/snu-sf-class/swpp202401-benchmarks
 
       - name: Test Benchmark Compilation
         run: ./.github/scripts/test_benchmark_compilation.sh

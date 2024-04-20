@@ -1,6 +1,6 @@
 #!/bin/bash
 
-LLVM_DIR=/opt/llvm/bin
+LLVM_DIR=/opt/llvm-18.1.0/bin
 ALIVE_TV_BINARY=$(realpath "$1"/alive-tv)
 
 cd swpp202301-benchmarks/
