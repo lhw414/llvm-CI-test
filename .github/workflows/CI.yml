@@ -24,7 +24,7 @@ jobs:
           path: "interpreter"
 
       - name: check pwd
-        run: echo "pwd"
+        run: pwd
 
       - name: Cache Alive2 build
         id: cache-alive2
@@ -41,7 +41,7 @@ jobs:
         run: cmake -GNinja -Bbuild -DALIVE2_BINARY_DIR=~./alive2/build/
 
       - name: Build
-        run: cmake --build build --target swpp-compiler
+        run: cmake --build build --target compiler
 
       - name: Run unit tests
         run: ctest --test-dir build
