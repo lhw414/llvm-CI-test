@@ -23,7 +23,7 @@ jobs:
           repository: "snu-sf-class/swpp202401-interpreter"
           path: "interpreter"
 
-      - uses: check pwd
+      - name: check pwd
         run: echo "pwd"
 
       - name: Cache Alive2 build
