@@ -43,7 +43,9 @@ jobs:
           cmake -GNinja -Bbuild -DCMAKE_MAKE_PROGRAM=/opt/ninja-1.11.1/bin/ninja
 
       - name: Build
-        run: cmake --build build --target swpp-compiler
+        run: |
+          cd compiler
+          cmake --build build --target swpp-compiler
 
       - name: Run unit tests
         run: ctest --test-dir build
