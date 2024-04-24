@@ -40,7 +40,10 @@ jobs:
         run: |
           cd compiler
           export PATH=/opt/cmake-3.28.3/bin:/opt/ninja-1.11.1/bin:$PATH
-          cmake -GNinja -Bbuild -DCMAKE_MAKE_PROGRAM=/opt/ninja-1.11.1/bin/ninja
+          cmake -GNinja -Bbuild \
+            -DCMAKE_C_COMPILER=/opt/llvm-18.1.0/bin/clang \
+            -DCMAKE_CXX_COMPILER=/opt/llvm-18.1.0/bin/clang++ \
+            -DCMAKE_MAKE_PROGRAM=/opt/ninja-1.11.1/bin/ninja
 
       - name: Build
         run: |
