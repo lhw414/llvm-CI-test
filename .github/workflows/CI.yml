@@ -23,16 +23,6 @@ jobs:
           repository: "snu-sf-class/swpp202401-interpreter"
           path: "interpreter"
 
-      - name: List Z3 directory structure
-        run: |
-          echo "Listing the contents of /opt/z3-4.13.0/"
-          ls -lahR /opt/z3-4.13.0/
-
-      - name: Install dependencies
-        run: |
-          apt-get update
-          apt-get install -y git g++ cmake ninja-build re2c libhiredis-dev
-
       # - name: Cache Alive2 build
       #   id: cache-alive2
       #   uses: actions/cache@v3
@@ -47,9 +37,10 @@ jobs:
       #     compiler/.github/scripts/build_alive2.sh
 
       - name: Configure CMake
-        run: | 
+        run: |
           cd compiler
-          cmake -GNinja -Bbuild
+          export PATH=/opt/cmake-3.28.3/bin:/opt/ninja-1.11.1/bin:$PATH
+          cmake -GNinja -Bbuild -DCMAKE_MAKE_PROGRAM=/opt/ninja-1.11.1/bin/ninja
 
       - name: Build
         run: cmake --build build --target swpp-compiler
