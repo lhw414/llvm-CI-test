@@ -51,7 +51,9 @@ jobs:
           cmake --build build --target swpp-compiler
 
       - name: Run unit tests
-        run: ctest --test-dir build
+        run: |
+          cd compiler
+          ctest --test-dir build
 
       - name: Test Benchmark
         run: |
