@@ -5,7 +5,7 @@ ALIVE_TV_BINARY=$(realpath "$1"/alive-tv)
 
 cd benchmarks/
 
-print("Start testing using benchmarks...")
+echo "Start testing using benchmarks..."
 
 # Build asms and capture output
 output=$(python3 build-asms.py compiler/build/swpp-compiler 2>&1)
