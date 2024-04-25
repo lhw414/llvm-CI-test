@@ -31,7 +31,7 @@ optimizeIR(std::unique_ptr<llvm::Module> &&__M,
 
     FPM.addPass(llvm::createFunctionToLoopPassAdaptor(std::move(LPM)));
     // Add function-level opt passes below
-    FPM.addPass(llvm::TestOptimization())
+    FPM.addPass(llvm::TestOptimization());
 
     CGPM.addPass(llvm::createCGSCCToFunctionPassAdaptor(std::move(FPM)));
     // Add CGSCC-level opt passes below
