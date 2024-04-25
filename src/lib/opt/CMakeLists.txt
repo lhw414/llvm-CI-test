@@ -11,3 +11,4 @@ function(add_opt_pass pass_name file_name)
 endfunction()
 
 # /================= ADD OPT PASSES BELOW ================/
+add_opt_pass(TestOptimization TestOptimization.cpp)

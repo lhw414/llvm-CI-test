@@ -8,6 +8,8 @@
 
 using namespace std::string_literals;
 
+#include "./opt/test_optimization.h"
+
 namespace sc::opt {
 OptInternalError::OptInternalError(const std::exception &__e) noexcept {
   message = "exception thrown from opt\n"s + __e.what();
@@ -29,6 +31,7 @@ optimizeIR(std::unique_ptr<llvm::Module> &&__M,
 
     FPM.addPass(llvm::createFunctionToLoopPassAdaptor(std::move(LPM)));
     // Add function-level opt passes below
+    FPM.addPass(llvm::TestOptimization())
 
     CGPM.addPass(llvm::createCGSCCToFunctionPassAdaptor(std::move(FPM)));
     // Add CGSCC-level opt passes below
