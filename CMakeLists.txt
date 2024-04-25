@@ -27,17 +27,16 @@ enable_testing()
 add_subdirectory(src)
 
 
-# enable_testing()
+enable_testing()
 
-# # Bash 스크립트를 테스트로 추가
-# add_test(NAME OptimizationTests
-#          COMMAND /path/to/your/test_script.sh)
+# Bash 스크립트를 테스트로 추가
+add_test(NAME OptimizationTests COMMAND do_tests.sh)
 
-# # 테스트 종속성 확인
-# find_program(BASH_PROGRAM bash)
-# if(NOT BASH_PROGRAM)
-#   message(FATAL_ERROR "bash is not found on your system. Please install it to run the tests.")
-# endif()
+# 테스트 종속성 확인
+find_program(BASH_PROGRAM bash)
+if(NOT BASH_PROGRAM)
+  message(FATAL_ERROR "bash is not found on your system. Please install it to run the tests.")
+endif()
 
-# # 나머지 프로젝트 설정
-# add_subdirectory(src)
+# 나머지 프로젝트 설정
+add_subdirectory(src)
