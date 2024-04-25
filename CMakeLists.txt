@@ -24,7 +24,7 @@ endif (DOXYGEN_FOUND)
 enable_testing()
 
 # Add tests, subdirectories, etc below
-add_subdirectory(src)
+add_subdirectory(src build_src)
 
 
 enable_testing()
