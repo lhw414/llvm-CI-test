@@ -53,7 +53,7 @@ jobs:
       - name: Run unit tests
         run: |
           cd compiler
-          ctest --test-dir build
+          ctest --test-dir build --rerun-failed --output-on-failure
 
       - name: Test Benchmark
         run: |
