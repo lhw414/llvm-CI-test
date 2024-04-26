@@ -3,6 +3,13 @@
 echo "Current ls:"
 ls
 
+# /opt 디렉토리의 내용 확인
+echo "Contents of /opt:"
+ls /opt/
+
+# cmake 경로를 PATH에 추가
+export PATH=/opt/cmake-3.28.3/bin:$PATH
+
 git clone https://github.com/AliveToolkit/alive2.git
 cd alive2
 
