@@ -12,7 +12,7 @@ clang++ --version
 git clone https://github.com/AliveToolkit/alive2.git
 cd alive2
 
-git checkout 13266e9e163c2984f3c5de0c0961e04cb4cafc7a
+# git checkout 13266e9e163c2984f3c5de0c0961e04cb4cafc7a
 git apply ../compiler/.github/scripts/alive2-swpp2024-intrinsics.patch
 
 # CMake 설정과 빌드
