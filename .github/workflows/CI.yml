@@ -23,6 +23,10 @@ jobs:
           repository: "snu-sf-class/swpp202401-interpreter"
           path: "interpreter"
 
+      - name: Export Path
+        run: |
+          export PATH=/opt/cmake-3.28.3/bin:/opt/ninja-1.11.1/bin:$PATH
+
       - name: Cache Alive2 build
         id: cache-alive2
         uses: actions/cache@v3
