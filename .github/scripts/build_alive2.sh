@@ -1,5 +1,8 @@
 #!/bin/bash
 
+echo "Current ls:"
+ls
+
 git clone https://github.com/AliveToolkit/alive2.git
 cd alive2
 
