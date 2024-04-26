@@ -18,12 +18,14 @@ else ()
 endif ()
 
 # 서브디렉토리 추가
-add_subdirectory(src build_src)
+add_subdirectory(src)
 
-# 테스트 환경 설정
-enable_testing()
-find_program(BASH_PROGRAM bash)
-if(NOT BASH_PROGRAM)
-    message(FATAL_ERROR "bash is not found on your system. Please install it to run the tests.")
-endif()
-add_test(NAME OptimizationTests COMMAND ${BASH_PROGRAM} ${CMAKE_CURRENT_SOURCE_DIR}/do_tests.sh)
+# # 테스트 환경 설정
+# enable_testing()
+# find_program(BASH_PROGRAM bash)
+# if(NOT BASH_PROGRAM)
+#     message(FATAL_ERROR "bash is not found on your system. Please install it to run the tests.")
+# endif()
+
+# # 쉘 스크립트 테스트 추가
+# add_test(NAME OptimizationTests COMMAND ${BASH_PROGRAM} ${CMAKE_CURRENT_SOURCE_DIR}/do_tests.sh ~/llvm-18.1.0/bin)

@@ -23,18 +23,18 @@ jobs:
           repository: "snu-sf-class/swpp202401-interpreter"
           path: "interpreter"
 
-      # - name: Cache Alive2 build
-      #   id: cache-alive2
-      #   uses: actions/cache@v3
-      #   with:
-      #     path: ./alive2/build
-      #     key: ${{ runner.os }}-alive2-${{ hashFiles('.github/scripts/build_alive2.sh') }}
+      - name: Cache Alive2 build
+        id: cache-alive2
+        uses: actions/cache@v3
+        with:
+          path: ./alive2/build
+          key: ${{ runner.os }}-alive2-${{ hashFiles('.github/scripts/build_alive2.sh') }}
 
-      # - if: ${{ steps.cache-alive2.outputs.cache-hit != 'true' }}
-      #   name: Build Alive2
-      #   run: |
-      #     chmod +x compiler/.github/scripts/build_alive2.sh
-      #     compiler/.github/scripts/build_alive2.sh
+      - if: ${{ steps.cache-alive2.outputs.cache-hit != 'true' }}
+        name: Build Alive2
+        run: |
+          chmod +x compiler/.github/scripts/build_alive2.sh
+          compiler/.github/scripts/build_alive2.sh
 
       - name: Configure CMake
         run: |
