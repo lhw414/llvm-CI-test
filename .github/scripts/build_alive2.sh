@@ -3,12 +3,6 @@
 # LLVM의 clang 경로를 PATH에 추가
 export PATH=/opt/llvm-18.1.0/bin:$PATH
 
-# clang 및 clang++ 버전 확인
-echo "clang version:"
-clang --version
-echo "clang++ version:"
-clang++ --version
-
 git clone https://github.com/AliveToolkit/alive2.git
 cd alive2
 
